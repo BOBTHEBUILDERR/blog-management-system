@@ -48,7 +48,8 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
     }
 
     /**
@@ -56,7 +57,8 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post= Post::where('id', $id)->first();
+            return view('posts.blog')->with('post', $post);
     }
 
     /**
@@ -112,4 +114,11 @@ class PostsController extends Controller
         // dd($posts[0]->users->name);
         return view('posts.index')->with('posts',$posts);
     }
+
+        public function comments(Request $request){
+            dd($request->all());
+
+            
+        }
+
 }

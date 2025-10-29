@@ -26,6 +26,7 @@
                 <td>{{ $post->content }}</td>
                 <td>
                         
+                <a href="{{ route('posts.show',$post->id) }}">View</a>            
                 <a href="{{ route('posts.edit',$post->id) }}">Edit</a>            
                 <a href="{{ url('posts/delete/'.$post->id.'') }}">Delete</a>            
                 </td>

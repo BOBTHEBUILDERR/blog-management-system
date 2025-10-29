@@ -19,8 +19,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts', [PostsController::class, 'index'])->name('posts');
     Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
     Route::get('/posts/edit/{id}', [PostsController::class, 'edit'])->name('posts.edit');
+    Route::get('/posts/show/{id}', [PostsController::class, 'show'])->name('posts.show');
     Route::post('/posts/update/{id}', [PostsController::class, 'update'])->name('posts.update');
     Route::get('/posts/delete/{id}', [PostsController::class, 'destroy'])->name('posts.delete');
+    Route::post('/posts/comments', [PostsController::class, 'comments'])->name('posts.comments');
 });
 
 require __DIR__.'/auth.php';
