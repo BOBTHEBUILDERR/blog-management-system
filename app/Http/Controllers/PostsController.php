@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 
 
 class PostsController extends Controller
@@ -14,8 +15,8 @@ class PostsController extends Controller
     public function index()
     {
 
-        $posts = Post::all();
-        // dd($posts[0]);
+        $posts = Post::with('users')->get();
+        // dd($posts[0]->users->name);
         return view('posts.index')->with('posts',$posts);
     }
 
@@ -31,7 +32,8 @@ class PostsController extends Controller
         $create->user_id = auth()->id();
 
         if($create->save()){
-            return view('posts.index');
+            $posts = Post::all();
+            return view('posts.index')->with('posts',$posts);
         }
        else{
         dd('here');
@@ -78,6 +80,21 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
+            $post= Post::where('id', $id)->get();
+            // dd($post[0]->user_id);
+            if(auth()->id() == $post[0]->user_id);{
+                 $post->each->delete();
+            } 
+            
+            
+       
+
+
+        
+        
+        $posts = Post::with('users')->get();
+        // dd($posts[0]->users->name);
+        return view('posts.index')->with('posts',$posts);
     }
 }

@@ -12,15 +12,23 @@
     <table>
         <thead> 
             <th>id  </th>
-            <th>title   </th>
-            <th>content  </th>
+            <th>Name  </th>
+            <th>Title   </th>
+            <th>Content  </th>
+            <th>Action  </th>
         </thead>
         <tbody>
              @foreach($posts as $post)
             <tr>
                 <td>{{ $post->id }}</td>
+                <td>{{ $post->users->name }}</td>
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->content }}</td>
+                <td>
+                    <button>edit</button>
+                    <a href="{{ url('posts/delete/'.$post->id.'') }}">Delete</a>            
+                </td>
+                
             </tr>
             @endforeach
         </tbody>
