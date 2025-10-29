@@ -25,8 +25,9 @@
                 <td>{{ $post->title }}</td>
                 <td>{{ $post->content }}</td>
                 <td>
-                    <button>edit</button>
-                    <a href="{{ url('posts/delete/'.$post->id.'') }}">Delete</a>            
+                        
+                <a href="{{ route('posts.edit',$post->id) }}">Edit</a>            
+                <a href="{{ url('posts/delete/'.$post->id.'') }}">Delete</a>            
                 </td>
                 
             </tr>

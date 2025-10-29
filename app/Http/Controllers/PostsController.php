@@ -64,7 +64,10 @@ class PostsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+     $post= Post::where('id', $id)->first();
+
+    //  dd($post[0]);
+       return view('posts.edit')->with('post', $post);
     }
 
     /**
@@ -72,7 +75,18 @@ class PostsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $postuser= Post::where('id', $id)->first();
+
+        if(auth()->id() == $postuser->user_id){
+            
+            $post= Post::where('id', $id)->update(['title' => $request->title,'content' => $request->content, ]);
+            
+        }
+
+         $posts = Post::with('users')->get();
+        // dd($posts[0]->users->name);
+        return view('posts.index')->with('posts',$posts);
+
     }
 
     /**
@@ -82,8 +96,9 @@ class PostsController extends Controller
     {
         
             $post= Post::where('id', $id)->get();
-            // dd($post[0]->user_id);
-            if(auth()->id() == $post[0]->user_id);{
+            dd($post[0]->user_id);
+            if(auth()->id() == $post[0]->user_id);
+            {
                  $post->each->delete();
             } 
             

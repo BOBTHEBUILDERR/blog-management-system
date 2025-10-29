@@ -18,6 +18,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/posts', [PostsController::class, 'index'])->name('posts');
     Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
+    Route::get('/posts/edit/{id}', [PostsController::class, 'edit'])->name('posts.edit');
+    Route::post('/posts/update/{id}', [PostsController::class, 'update'])->name('posts.update');
     Route::get('/posts/delete/{id}', [PostsController::class, 'destroy'])->name('posts.delete');
 });
 
