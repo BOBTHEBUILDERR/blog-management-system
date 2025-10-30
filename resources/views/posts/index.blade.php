@@ -1,56 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Posts</h1>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('All Posts') }}
+        </h2>
+        <a href="{{ route('posts.create') }}" 
+               class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                + Create Post
+            </a>
+    </x-slot>
 
-    @if($posts)
-    <table>
-        <thead> 
-            <th>id  </th>
-            <th>Name  </th>
-            <th>Title   </th>
-            <th>Content  </th>
-            <th>Action  </th>
-        </thead>
-        <tbody>
-             @foreach($posts as $post)
-            <tr>
-                <td>{{ $post->id }}</td>
-                <td>{{ $post->users->name }}</td>
-                <td>{{ $post->title }}</td>
-                <td>{{ $post->content }}</td>
-                <td>
-                        
-                <a href="{{ route('posts.show',$post->id) }}">View</a>            
-                <a href="{{ route('posts.edit',$post->id) }}">Edit</a>            
-                <a href="{{ url('posts/delete/'.$post->id.'') }}">Delete</a>            
-                </td>
-                
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-   
-    @endif
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-<hr>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 text-gray-900">
+                @foreach($posts as $post)
+                    <article class="mb-6">
+                        <h2 class="text-2xl font-semibold">
+                            <a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a>
+                        </h2>
+                        <p class="text-sm text-gray-600">
+                            By {{ $post->user->name }} • {{ $post->created_at->diffForHumans() }}
+                        </p>
+                        <p>{{ \Illuminate\Support\Str::limit($post->content, 150) }}</p>
+                    </article>
+                    <hr>
+                @endforeach
 
-    <form action="{{ route('posts.create')}}" method="get">
-        @csrf
-        <label for="title">Title</label>
-    <input type="text" name="title" required>
-        <label for="content">Content</label>
-    <input type="text" name="content" required>
-
-    <input type="submit" name="submit">
-
-    </form>
-    
-
-</body>
-</html>
+                <div class="mt-4">
+                    {{ $posts->links() }}
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
